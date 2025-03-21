@@ -4,9 +4,8 @@
     <meta charset="UTF-8" />
     <title>NextGen - Alice Chatbot</title>
 
-    <!-- Dialogflow Messenger Styles & Script -->
-    <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
-    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+    <!-- Dialogflow Messenger Styles -->
+    <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css" />
 
     <!-- Custom Page Styles -->
     <style>
@@ -34,7 +33,6 @@
         font-size: 1.1rem;
       }
 
-      /* Chatbot styling override */
       df-messenger {
         z-index: 999;
         position: fixed;
@@ -53,17 +51,28 @@
     <h1>Welcome to NextGen’s Smart Assistant</h1>
     <p>Meet Alice — your intelligent project guide and support bot.</p>
 
-    <!-- Dialogflow Chatbot -->
-    <df-messenger
-  intent="WELCOME"
-  location="us-central1"
-  project-id="nextgen-454401"
-  agent-id="09844661-f51b-4342-8ee3-0edb56e00c91"
-  language-code="en"
-  max-query-length="-1">
+    <!-- Inject Chatbot with Random Session ID -->
+    <script>
+      const sessionId = Math.random().toString(36).substring(2);
+      window.addEventListener('DOMContentLoaded', () => {
+        const messenger = document.createElement('df-messenger');
+        messenger.setAttribute('agent-id', '09844661-f51b-4342-8ee3-0edb56e00c91');
+        messenger.setAttribute('project-id', 'nextgen-454401');
+        messenger.setAttribute('location', 'us-central1');
+        messenger.setAttribute('language-code', 'en');
+        messenger.setAttribute('intent', 'WELCOME');
+        messenger.setAttribute('session-id', sessionId);
+        messenger.setAttribute('max-query-length', '-1');
 
-      <df-messenger-chat-bubble chat-title="Alice">
-      </df-messenger-chat-bubble>
-    </df-messenger>
+        const bubble = document.createElement('df-messenger-chat-bubble');
+        bubble.setAttribute('chat-title', 'Alice');
+
+        messenger.appendChild(bubble);
+        document.body.appendChild(messenger);
+      });
+    </script>
+
+    <!-- Dialogflow Messenger Script -->
+    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
   </body>
 </html>
